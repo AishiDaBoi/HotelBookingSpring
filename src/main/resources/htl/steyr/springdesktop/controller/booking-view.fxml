@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.springdesktop.controller.StartController"
+      spacing="10" padding="20" alignment="CENTER">
+   <!-- Header -->
+   <Label text="Hotel Buchungssystem" />
+
+   <!-- Kundenliste -->
+   <ListView fx:id="customerListView" prefHeight="200" prefWidth="250"/>
+
+   <!-- Button für Buchung -->
+   <HBox spacing="10" alignment="CENTER">
+      <Button text="Buchung erstellen" fx:id="bookingBTN" onAction="#onBookingClick"/>
+   </HBox>
+
+   <!-- Button für Kundenverwaltung -->
+   <HBox spacing="10" alignment="CENTER">
+      <Button text="Kunde hinzufügen" fx:id="addCustomerBTN" onAction="#onAddCustomerClick"/>
+   </HBox>
+</VBox>
