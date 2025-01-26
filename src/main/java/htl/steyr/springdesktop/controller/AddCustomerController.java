@@ -45,14 +45,13 @@ public class AddCustomerController {
 
     Notification notification = new Notification();
 
-
     // Methode zum Schließen des Fensters
     public void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeBTN.getScene().getWindow();
         stage.close();
     }
 
-    // Methode zum Speichern des Kunden
+    @FXML
     public void saveCustomer(ActionEvent event) {
 
         String firstname = firstnameTFD.getText();
@@ -73,11 +72,12 @@ public class AddCustomerController {
         newCustomer.setPhone(phone);
         newCustomer.setBirthdate(dateOfBirth.toString());  // oder als LocalDate speichern
 
-        customerRepository.save(newCustomer);
-
+       customerRepository.save(newCustomer);
 
 
         // Erfolgreiche Speicherung und Schließen des Fensters
         closeWindow(event);
     }
+
+
 }

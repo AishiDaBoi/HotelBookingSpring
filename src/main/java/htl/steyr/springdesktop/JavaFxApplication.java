@@ -10,7 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class JavaFxApplication extends Application {
-    private static final String APPLICATION_TITLE = "4AHITN INSY";
+    private static final String APPLICATION_TITLE = "Hotel-Buchungssoftware";
 
     public static ConfigurableApplicationContext springContext;
 

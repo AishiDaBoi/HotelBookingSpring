@@ -43,35 +43,41 @@ public class StartController {
     @FXML
     private void onBookingClick(MouseEvent event) {
 
-        openWindow("booking-view.fxml", "Buchung"); // Korrekte FXML-Datei und Titel
+     //   openWindow("booking-view.fxml", "Buchung"); // Korrekte FXML-Datei und Titel
     }
 
 
-    private void openWindow(String fxmlFile, String windowTitle) {
-        try {
-            // Korrekt den Pfad zur FXML-Datei angeben
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/htl/steyr/springdesktop/controller/" + fxmlFile));  // Pfad relativ zum resources-Verzeichnis
-            AnchorPane root = loader.load();
+    public static Object openWindow(URL url, boolean modal, boolean resizeable) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(url);
+        fxmlLoader.setControllerFactory(JavaFxApplication.springContext::getBean);
 
-            // Neues Fenster erstellen
-            Stage stage = new Stage();
-            stage.setTitle(windowTitle);
-            stage.initModality(Modality.APPLICATION_MODAL); // Verhindert, dass der Benutzer zum Hauptfenster zurückkehrt, bevor er das neue Fenster schließt
-            stage.initOwner(JavaFxApplication.primaryStage); // Referenz auf den Primär-Stage, falls verfügbar
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Fehler beim Öffnen des Fensters: " + e.getMessage());
+        Parent root = fxmlLoader.load();
+
+        Object controller = fxmlLoader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setResizable(resizeable);
+
+        if (modal) {
+            stage.initOwner(JavaFxApplication.primaryStage);
+            stage.initModality(Modality.APPLICATION_MODAL);
         }
-    }
 
+        stage.show();
+        return controller;
+    }
 
 
 
     public void openCustomerWindow(ActionEvent event) {
 
-        openWindow("addCustomer-view.fxml", "Add Customer");
+        try {
+            openWindow(StartController.class.getResource("addCustomer-view.fxml"), true, false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

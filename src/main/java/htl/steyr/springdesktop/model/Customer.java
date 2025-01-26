@@ -27,6 +27,11 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Booking> bookings;
 
+    public Customer() {}
+
+
+
+
     public String getBirthdate() {
         return birthdate;
     }
