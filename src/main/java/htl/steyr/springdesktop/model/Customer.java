@@ -27,9 +27,9 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Booking> bookings;
 
-    public Customer() {}
 
-
+    public Customer() {
+    }
 
 
     public String getBirthdate() {
@@ -79,6 +79,7 @@ public class Customer {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     @Override
     public String toString() {

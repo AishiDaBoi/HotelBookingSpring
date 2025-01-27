@@ -26,6 +26,31 @@ public class Booking {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
     private List<RoomBooking> roomBookings;
 
+   @Column(name = "roomtype")
+   private RoomTypes roomType;
+
+    @Column(name = "roomcategory")
+    private RoomCategories roomCategory;
+
+    public RoomTypes getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomTypes roomType) {
+        this.roomType = roomType;
+    }
+
+    public RoomCategories getRoomCategory() {
+        return roomCategory;
+    }
+
+    public void setRoomCategory(RoomCategories roomCategory) {
+        this.roomCategory = roomCategory;
+    }
+
+
+
+
     /**
      * Important:
      * Sprint Boot needs a default constructor!
@@ -70,4 +95,18 @@ public class Booking {
 
         return false;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public List<RoomBooking> getRoomBookings() {
+        return roomBookings;
+    }
+
+    public void setRoomBookings(List<RoomBooking> roomBookings) {
+        this.roomBookings = roomBookings;
+    }
+
+
 }

@@ -46,7 +46,8 @@ public class JavaFxApplication extends Application {
         JavaFxApplication.primaryStage = primaryStage;
 
         primaryStage.setTitle(APPLICATION_TITLE);
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root);
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
