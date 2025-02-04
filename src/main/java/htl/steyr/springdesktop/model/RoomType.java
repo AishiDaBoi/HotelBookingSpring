@@ -17,6 +17,12 @@ public class RoomType {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomType")
     private List<Room> rooms;
 
+    @Override
+    public String toString() {
+        return this.roomType;
+    }
+
+
     public RoomType() {}
 
     public Long getId() {

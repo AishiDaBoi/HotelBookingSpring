@@ -20,7 +20,6 @@ public class Room {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<RoomBooking> roomBookings;
 

@@ -47,7 +47,7 @@ public class AddBookingController implements Initializable {
         customerLVW.getItems().clear();
         customerLVW.getItems().addAll(customerRepository.findAll());
 
-        // Populate RoomTypes and RoomCategories ComboBoxes
+
         roomTypeCBX.getItems().setAll(roomTypeRepository.findAll());
         roomCategoryCBX.getItems().setAll(roomCategoryRepository.findAll());
     }
