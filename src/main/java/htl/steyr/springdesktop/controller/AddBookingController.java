@@ -2,10 +2,12 @@ package htl.steyr.springdesktop.controller;
 
 import htl.steyr.springdesktop.model.Booking;
 import htl.steyr.springdesktop.model.Customer;
-import htl.steyr.springdesktop.model.RoomCategories;
-import htl.steyr.springdesktop.model.RoomTypes;
+import htl.steyr.springdesktop.model.RoomCategory;
+import htl.steyr.springdesktop.model.RoomType;
 import htl.steyr.springdesktop.repository.BookingRepository;
 import htl.steyr.springdesktop.repository.CustomerRepository;
+import htl.steyr.springdesktop.repository.RoomCategoryRepository;
+import htl.steyr.springdesktop.repository.RoomTypeRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -24,14 +26,20 @@ public class AddBookingController implements Initializable {
     public DatePicker startdateDP;
     public DatePicker enddateDP;
     public Button saveBTN;
-    public ComboBox<RoomTypes> roomTypeCBX; // Typed ComboBox for RoomTypes
-    public ComboBox<RoomCategories> roomCategoryCBX; // Typed ComboBox for RoomCategories
+    public ComboBox<RoomType> roomTypeCBX; // Typed ComboBox for RoomTypes
+    public ComboBox<RoomCategory> roomCategoryCBX; // Typed ComboBox for RoomCategories
 
     @Autowired
     private CustomerRepository customerRepository;
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private RoomTypeRepository roomTypeRepository;
+
+    @Autowired
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,8 +48,8 @@ public class AddBookingController implements Initializable {
         customerLVW.getItems().addAll(customerRepository.findAll());
 
         // Populate RoomTypes and RoomCategories ComboBoxes
-        roomTypeCBX.getItems().setAll(RoomTypes.values());
-        roomCategoryCBX.getItems().setAll(RoomCategories.values());
+        roomTypeCBX.getItems().setAll(roomTypeRepository.findAll());
+        roomCategoryCBX.getItems().setAll(roomCategoryRepository.findAll());
     }
 
     public void saveBooking(ActionEvent event) {
@@ -57,6 +65,8 @@ public class AddBookingController implements Initializable {
             booking.setCustomer(customerLVW.getSelectionModel().getSelectedItem());
             booking.setDateOfArrival(startdateDP.getValue());
             booking.setDateOfDeparture(enddateDP.getValue());
+
+            // Correctly setting RoomType & RoomCategory
             booking.setRoomType(roomTypeCBX.getSelectionModel().getSelectedItem());
             booking.setRoomCategory(roomCategoryCBX.getSelectionModel().getSelectedItem());
 

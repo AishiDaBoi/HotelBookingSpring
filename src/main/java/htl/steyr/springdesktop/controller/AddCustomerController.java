@@ -1,7 +1,6 @@
 package htl.steyr.springdesktop.controller;
 
 import htl.steyr.springdesktop.model.Customer;
-import htl.steyr.springdesktop.model.Notification;
 import htl.steyr.springdesktop.repository.CustomerRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,23 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
-
-@Component
+@Controller
 public class AddCustomerController {
 
     @Autowired
@@ -43,9 +31,7 @@ public class AddCustomerController {
     @FXML
     private Button closeBTN;
 
-    Notification notification = new Notification();
-
-    // Methode zum Schließen des Fensters
+    // Method to close the window
     public void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeBTN.getScene().getWindow();
         stage.close();
@@ -53,31 +39,38 @@ public class AddCustomerController {
 
     @FXML
     public void saveCustomer(ActionEvent event) {
-
-        String firstname = firstnameTFD.getText();
-        String lastname = lastnameTFD.getText();
+        String firstname = firstnameTFD.getText().trim();
+        String lastname = lastnameTFD.getText().trim();
         LocalDate dateOfBirth = dateDP.getValue();
-        String phone = phoneTFD.getText();
+        String phone = phoneTFD.getText().trim();
 
-        // Überprüfen, ob alle Felder ausgefüllt sind
-        if (firstname.isEmpty() || lastname.isEmpty() || dateOfBirth == null || phone.isEmpty()) {
-            notification.showError("Fehler", "Fehler beim Speichern", "Bitte füllen Sie alle Felder aus!");
+        // Validate fields
+        if (firstname.isBlank() || lastname.isBlank() || dateOfBirth == null || phone.isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Fehler beim Speichern", "Bitte füllen Sie alle Felder aus!");
             return;
         }
 
-        // Neuer Customer erstellen
+        // Create new customer
         Customer newCustomer = new Customer();
         newCustomer.setFirstname(firstname);
         newCustomer.setLastname(lastname);
         newCustomer.setPhone(phone);
-        newCustomer.setBirthdate(dateOfBirth.toString());  // oder als LocalDate speichern
+        newCustomer.setBirthdate(dateOfBirth);  // Assuming birthdate is LocalDate in Customer entity
 
-       customerRepository.save(newCustomer);
+        customerRepository.save(newCustomer);
 
+        // Show success message
+        showAlert(Alert.AlertType.INFORMATION, "Erfolg", "Kunde gespeichert", "Der Kunde wurde erfolgreich gespeichert!");
 
-        // Erfolgreiche Speicherung und Schließen des Fensters
+        // Close window after saving
         closeWindow(event);
     }
 
-
+    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }

@@ -1,7 +1,6 @@
 package htl.steyr.springdesktop.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,47 +19,32 @@ public class Booking {
     private LocalDate dateOfDeparture;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
     private List<RoomBooking> roomBookings;
 
-   @Column(name = "roomtype")
-   private RoomTypes roomType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
-    @Column(name = "roomcategory")
-    private RoomCategories roomCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_category_id", nullable = false)
+    private RoomCategory roomCategory;
 
-    public RoomTypes getRoomType() {
-        return roomType;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_type_id", nullable = false)
+    private RoomType roomType;
 
-    public void setRoomType(RoomTypes roomType) {
-        this.roomType = roomType;
-    }
-
-    public RoomCategories getRoomCategory() {
-        return roomCategory;
-    }
-
-    public void setRoomCategory(RoomCategories roomCategory) {
-        this.roomCategory = roomCategory;
-    }
-
-
-
-
-    /**
-     * Important:
-     * Sprint Boot needs a default constructor!
-     * When we create a constructor that takes parameters,
-     * we have to define manually an empty default constructor!
-     */
     public Booking() {}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getDateOfArrival() {
@@ -79,25 +63,12 @@ public class Booking {
         this.dateOfDeparture = dateOfDeparture;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Booking) {
-            return this.getId().equals(((Booking) obj).getId());
-        }
-
-        return false;
-    }
-
     public Customer getCustomer() {
         return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public List<RoomBooking> getRoomBookings() {
@@ -108,5 +79,40 @@ public class Booking {
         this.roomBookings = roomBookings;
     }
 
+    public Room getRoom() {
+        return room;
+    }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public RoomCategory getRoomCategory() {
+        return roomCategory;
+    }
+
+    public void setRoomCategory(RoomCategory roomCategory) {
+        this.roomCategory = roomCategory;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Booking booking = (Booking) obj;
+        return id != null && id.equals(booking.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

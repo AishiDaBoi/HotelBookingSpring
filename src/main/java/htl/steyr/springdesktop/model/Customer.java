@@ -1,7 +1,7 @@
 package htl.steyr.springdesktop.model;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -19,7 +19,7 @@ public class Customer {
     private String lastname;
 
     @Column(name = "birthdate", nullable = false)
-    private String birthdate;
+    private LocalDate birthdate;
 
     @Column(name = "phone", nullable = false)
     private String phone;
@@ -27,16 +27,37 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Booking> bookings;
 
+    public Customer() {}
 
-    public Customer() {
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getBirthdate() {
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -56,33 +77,8 @@ public class Customer {
         this.bookings = bookings;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
     @Override
     public String toString() {
-        return getFirstname() + " " + getLastname();
+        return firstname + " " + lastname;
     }
 }
