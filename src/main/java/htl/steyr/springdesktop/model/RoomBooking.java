@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "room_booking")
 public class RoomBooking {
-
-    public RoomBooking() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
@@ -16,31 +17,15 @@ public class RoomBooking {
     @JoinColumn(name = "booking_id")
     private Booking booking;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public RoomBooking() {}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Getter und Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public Room getRoom() { return room; }
+    public void setRoom(Room room) { this.room = room; }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+    public Booking getBooking() { return booking; }
+    public void setBooking(Booking booking) { this.booking = booking; }
 }

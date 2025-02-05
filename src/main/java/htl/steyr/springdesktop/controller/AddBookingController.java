@@ -57,8 +57,7 @@ public class AddBookingController implements Initializable {
             booking.setCustomer(customerLVW.getSelectionModel().getSelectedItem());
             booking.setDateOfArrival(startdateDP.getValue());
             booking.setDateOfDeparture(enddateDP.getValue());
-            booking.setRoomType(roomTypeCBX.getSelectionModel().getSelectedItem());
-            booking.setRoomCategory(roomCategoryCBX.getSelectionModel().getSelectedItem());
+
 
             // Save the booking to the database
             bookingRepository.save(booking);

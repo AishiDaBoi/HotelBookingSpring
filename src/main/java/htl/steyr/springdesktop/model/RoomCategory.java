@@ -1,7 +1,6 @@
 package htl.steyr.springdesktop.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -12,13 +11,20 @@ public class RoomCategory {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "room_category", nullable = false)
     private RoomCategories roomCategory;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomCategory")
     private List<Room> rooms;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public RoomCategories getRoomCategory() {
         return roomCategory;
@@ -28,11 +34,11 @@ public class RoomCategory {
         this.roomCategory = roomCategory;
     }
 
-    public Long getId() {
-        return id;
+    public List<Room> getRooms() {
+        return rooms;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

@@ -1,11 +1,11 @@
 package htl.steyr.springdesktop.controller;
 
 import htl.steyr.springdesktop.JavaFxApplication;
-import htl.steyr.springdesktop.model.Booking;
-import htl.steyr.springdesktop.model.Customer;
-import htl.steyr.springdesktop.model.Notification;
+import htl.steyr.springdesktop.model.*;
 import htl.steyr.springdesktop.repository.BookingRepository;
 import htl.steyr.springdesktop.repository.CustomerRepository;
+import htl.steyr.springdesktop.repository.RoomCategoryRepository;
+import htl.steyr.springdesktop.repository.RoomTypeRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +33,14 @@ public class StartController {
 
     public Button addCustomerBTN;
     public ListView<Booking> bookingsLVW;
+    public ListView roomTypeLVW;
+    public ListView roomCategoryLVW;
+    public Label startDateLBL;
+    public Label endDateLBL;
+    public Label roomTypeLBL;
+    public Label roomCategoryLBL;
+    public Label priceLBL;
+
     @FXML
     private ListView<Customer> customerListView;
 
@@ -42,6 +51,10 @@ public class StartController {
 
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private RoomTypeRepository roomTypeRepo;
+    @Autowired
+    private RoomCategoryRepository roomCategoryRepo;
 
     @FXML
     public void initialize() {
@@ -50,6 +63,12 @@ public class StartController {
 
         bookingsLVW.getItems().clear();
         bookingsLVW.getItems().addAll(bookingRepository.findAll());
+
+        roomTypeLVW.getItems().clear();
+        roomTypeLVW.getItems().addAll(roomTypeRepo.findAll());
+
+        roomCategoryLVW.getItems().clear();
+        roomCategoryLVW.getItems().addAll(roomCategoryRepo.findAll());
     }
 
     public void openAddCustomerWindow(ActionEvent event) {
@@ -148,5 +167,42 @@ public class StartController {
         bookingsLVW.getItems().clear();
         bookingsLVW.getItems().addAll(bookingRepository.findAll());
 
+    }
+
+    public void openAddRoomTypeWindow(ActionEvent actionEvent) {
+        try {
+            openWindow(StartController.class.getResource("add-roomType-view.fxml"), true, false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteRoomType(ActionEvent actionEvent) {
+        RoomType roomType = (RoomType) roomTypeLVW.getSelectionModel().getSelectedItem();
+
+        if (roomType != null) {
+            roomTypeRepo.delete(roomType);
+            roomTypeLVW.getItems().remove(roomType);
+        } else {
+            notification.showError("Error", "Please select a room type to delete", "No room type selected");
+        }
+    }
+
+    public void openAddRoomCategoryWindow(ActionEvent actionEvent) {
+        try {
+            openWindow(StartController.class.getResource("add-roomCategory-view.fxml"), true, false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteRoomCategory(ActionEvent actionEvent) {
+        RoomCategory roomCategory = (RoomCategory) roomCategoryLVW.getSelectionModel().getSelectedItem();
+        if (roomCategory != null) {
+            roomCategoryRepo.delete(roomCategory);
+            roomCategoryLVW.getItems().remove(roomCategory);
+        } else {
+            notification.showError("Error", "Please select a room category to delete", "No room category selected");
+        }
     }
 }

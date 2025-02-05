@@ -1,8 +1,8 @@
 package htl.steyr.springdesktop.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -23,90 +23,43 @@ public class Booking {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "booking", cascade = CascadeType.ALL)
     private List<RoomBooking> roomBookings;
 
-   @Column(name = "roomtype")
-   private RoomTypes roomType;
-
-    @Column(name = "roomcategory")
-    private RoomCategories roomCategory;
-
-    public RoomTypes getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(RoomTypes roomType) {
-        this.roomType = roomType;
-    }
-
-    public RoomCategories getRoomCategory() {
-        return roomCategory;
-    }
-
-    public void setRoomCategory(RoomCategories roomCategory) {
-        this.roomCategory = roomCategory;
-    }
-
-
-
-
-    /**
-     * Important:
-     * Sprint Boot needs a default constructor!
-     * When we create a constructor that takes parameters,
-     * we have to define manually an empty default constructor!
-     */
     public Booking() {}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    public BigDecimal calculateTotalCost() {
+        BigDecimal totalCost = BigDecimal.ZERO;
+        long days = dateOfArrival.until(dateOfDeparture).getDays();
 
-    public LocalDate getDateOfArrival() {
-        return dateOfArrival;
-    }
+        if (days <= 0) return totalCost;
 
-    public void setDateOfArrival(LocalDate dateOfArrival) {
-        this.dateOfArrival = dateOfArrival;
-    }
-
-    public LocalDate getDateOfDeparture() {
-        return dateOfDeparture;
-    }
-
-    public void setDateOfDeparture(LocalDate dateOfDeparture) {
-        this.dateOfDeparture = dateOfDeparture;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Booking) {
-            return this.getId().equals(((Booking) obj).getId());
+        for (RoomBooking roomBooking : roomBookings) {
+            Room room = roomBooking.getRoom();
+            totalCost = totalCost.add(room.getPrice().multiply(BigDecimal.valueOf(days)));
         }
 
-        return false;
+        // 10% Rabatt ab 5 Zimmern
+        if (roomBookings.size() >= 5) {
+            totalCost = totalCost.multiply(BigDecimal.valueOf(0.9));
+        }
+
+        return totalCost;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    // Getter und Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public List<RoomBooking> getRoomBookings() {
-        return roomBookings;
-    }
+    public LocalDate getDateOfArrival() { return dateOfArrival; }
+    public void setDateOfArrival(LocalDate dateOfArrival) { this.dateOfArrival = dateOfArrival; }
 
-    public void setRoomBookings(List<RoomBooking> roomBookings) {
-        this.roomBookings = roomBookings;
-    }
+    public LocalDate getDateOfDeparture() { return dateOfDeparture; }
+    public void setDateOfDeparture(LocalDate dateOfDeparture) { this.dateOfDeparture = dateOfDeparture; }
 
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
 
+    public List<RoomBooking> getRoomBookings() { return roomBookings; }
+    public void setRoomBookings(List<RoomBooking> roomBookings) { this.roomBookings = roomBookings; }
 }
