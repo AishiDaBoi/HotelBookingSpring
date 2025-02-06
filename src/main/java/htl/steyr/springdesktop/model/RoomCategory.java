@@ -11,9 +11,9 @@ public class RoomCategory {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "room_category", nullable = false)
-    private RoomCategories roomCategory;
+    private String roomCategory;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomCategory")
     private List<Room> rooms;
@@ -26,11 +26,11 @@ public class RoomCategory {
         this.id = id;
     }
 
-    public RoomCategories getRoomCategory() {
+    public String getRoomCategory() {
         return roomCategory;
     }
 
-    public void setRoomCategory(RoomCategories roomCategory) {
+    public void setRoomCategory(String roomCategory) {
         this.roomCategory = roomCategory;
     }
 
@@ -41,4 +41,11 @@ public class RoomCategory {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    @Override
+    public String toString() {
+        return roomCategory;
+    }
+
+
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" styleClass="root" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml" fx:controller="htl.steyr.springdesktop.controller.BookingController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Booking Management" styleClass="section-label"/>
+
+    <GridPane hgap="10" vgap="10">
+        <DatePicker fx:id="arrivalDatePicker" promptText="Arrival Date" styleClass="modern-date-picker" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <DatePicker fx:id="departureDatePicker" promptText="Departure Date" styleClass="modern-date-picker" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="customerComboBox" promptText="Select Customer" styleClass="modern-combo-box" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
+        <Button text="Search Available Rooms" onAction="#searchAvailableRooms" styleClass="action-button" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2"/>
+
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label text="Available Rooms" styleClass="sub-section-label"/>
+            <ListView fx:id="availableRoomsListView" styleClass="modern-list-view"/>
+        </VBox>
+
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label text="Selected Rooms" styleClass="sub-section-label"/>
+            <ListView fx:id="selectedRoomsListView" styleClass="modern-list-view"/>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+            <Button text="Add Room" onAction="#addRoomToBooking" styleClass="action-button"/>
+            <Button text="Remove Room" onAction="#removeRoomFromBooking" styleClass="action-button"/>
+        </HBox>
+
+        <Label text="Total Price:" styleClass="sub-section-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <TextField fx:id="totalPriceField" editable="false" styleClass="modern-input" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+        <Button text="Create Booking" onAction="#createBooking" styleClass="action-button" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2"/>
+
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2">
+            <Label text="Existing Bookings" styleClass="sub-section-label"/>
+            <ListView fx:id="bookingsListView" styleClass="modern-list-view"/>
+        </VBox>
+
+        <Button text="Cancel Booking" onAction="#cancelBooking" styleClass="action-button" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2"/>
+    </GridPane>
+</VBox>

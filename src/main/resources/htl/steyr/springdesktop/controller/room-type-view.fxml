@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" styleClass="root" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml" fx:controller="htl.steyr.springdesktop.controller.RoomTypeController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Room Type Management" styleClass="section-label"/>
+
+    <HBox spacing="10">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <TextField fx:id="typeNameField" promptText="Type Name" styleClass="modern-input"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Add" onAction="#addType" styleClass="action-button"/>
+                <Button text="Edit" onAction="#editType" styleClass="action-button"/>
+                <Button text="Delete" onAction="#deleteType" styleClass="action-button"/>
+            </HBox>
+        </VBox>
+
+        <ListView fx:id="typeListView" HBox.hgrow="ALWAYS" styleClass="modern-list-view"/>
+    </HBox>
+</VBox>

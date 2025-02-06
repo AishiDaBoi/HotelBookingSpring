@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" styleClass="root" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml" fx:controller="htl.steyr.springdesktop.controller.RoomController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Room Management" styleClass="section-label"/>
+
+    <HBox spacing="10">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <TextField fx:id="roomNumberField" promptText="Room Number" styleClass="modern-input"/>
+            <TextField fx:id="dailyRateField" promptText="Price" styleClass="modern-input"/>
+            <ComboBox fx:id="categoryComboBox" promptText="Select Category" styleClass="modern-combo-box"/>
+            <ComboBox fx:id="typeComboBox" promptText="Select Type" styleClass="modern-combo-box"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Add" onAction="#addRoom" styleClass="action-button"/>
+                <Button text="Edit" onAction="#editRoom" styleClass="action-button"/>
+                <Button text="Delete" onAction="#deleteRoom" styleClass="action-button"/>
+            </HBox>
+        </VBox>
+
+        <ListView fx:id="roomListView" HBox.hgrow="ALWAYS" styleClass="modern-list-view"/>
+    </HBox>
+</VBox>

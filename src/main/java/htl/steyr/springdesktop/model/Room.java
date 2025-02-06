@@ -15,9 +15,6 @@ public class Room {
     @Column(name = "room_number", nullable = false, unique = true)
     private int roomNumber;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomBooking> roomBookings;
 
@@ -29,6 +26,9 @@ public class Room {
     @JoinColumn(name = "room_category_id")
     private RoomCategory roomCategory;
 
+    @Column(name = "daily_rate", nullable = false)
+    private BigDecimal dailyRate;
+
     public Room() {}
 
     // Getter und Setter
@@ -38,12 +38,26 @@ public class Room {
     public int getRoomNumber() { return roomNumber; }
     public void setRoomNumber(int roomNumber) { this.roomNumber = roomNumber; }
 
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
 
     public RoomCategory getRoomCategory() { return roomCategory; }
     public void setRoomCategory(RoomCategory roomCategory) { this.roomCategory = roomCategory; }
 
     public RoomType getRoomType() { return roomType; }
     public void setRoomType(RoomType roomType) { this.roomType = roomType; }
+
+    public List<RoomBooking> getRoomBookings() {
+        return roomBookings;
+    }
+
+    public void setRoomBookings(List<RoomBooking> roomBookings) {
+        this.roomBookings = roomBookings;
+    }
+
+    public BigDecimal getDailyRate() {
+        return dailyRate;
+    }
+
+    public void setDailyRate(BigDecimal dailyRate) {
+        this.dailyRate = dailyRate;
+    }
 }

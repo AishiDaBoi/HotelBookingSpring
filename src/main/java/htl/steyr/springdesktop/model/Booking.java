@@ -2,6 +2,7 @@ package htl.steyr.springdesktop.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class Booking {
 
     public BigDecimal calculateTotalCost() {
         BigDecimal totalCost = BigDecimal.ZERO;
-        long days = dateOfArrival.until(dateOfDeparture).getDays();
+        long days = ChronoUnit.DAYS.between(dateOfArrival, dateOfDeparture);
 
         if (days <= 0) return totalCost;
 
         for (RoomBooking roomBooking : roomBookings) {
             Room room = roomBooking.getRoom();
-            totalCost = totalCost.add(room.getPrice().multiply(BigDecimal.valueOf(days)));
+            totalCost = totalCost.add(room.getDailyRate().multiply(BigDecimal.valueOf(days)));
         }
 
         // 10% Rabatt ab 5 Zimmern
@@ -62,4 +63,26 @@ public class Booking {
 
     public List<RoomBooking> getRoomBookings() { return roomBookings; }
     public void setRoomBookings(List<RoomBooking> roomBookings) { this.roomBookings = roomBookings; }
+
+    // Hilfsmethoden
+    public void addRoomBooking(RoomBooking roomBooking) {
+        roomBookings.add(roomBooking);
+        roomBooking.setBooking(this);
+    }
+
+    public void removeRoomBooking(RoomBooking roomBooking) {
+        roomBookings.remove(roomBooking);
+        roomBooking.setBooking(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", dateOfArrival=" + dateOfArrival +
+                ", dateOfDeparture=" + dateOfDeparture +
+                ", customer=" + (customer != null ? customer.getLastname() : "null") +
+                ", numberOfRooms=" + (roomBookings != null ? roomBookings.size() : 0) +
+                '}';
+    }
 }

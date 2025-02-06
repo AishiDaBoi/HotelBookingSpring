@@ -3,74 +3,69 @@ package htl.steyr.springdesktop.controller;
 import htl.steyr.springdesktop.model.Room;
 import htl.steyr.springdesktop.model.RoomCategory;
 import htl.steyr.springdesktop.model.RoomType;
-import htl.steyr.springdesktop.repository.RoomCategoryRepository;
 import htl.steyr.springdesktop.repository.RoomRepository;
+import htl.steyr.springdesktop.repository.RoomCategoryRepository;
 import htl.steyr.springdesktop.repository.RoomTypeRepository;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Component
 public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
-
     @Autowired
     private RoomCategoryRepository roomCategoryRepository;
-
     @Autowired
     private RoomTypeRepository roomTypeRepository;
 
     @FXML
-    private TextField roomNumberTF;
-
-    @FXML
-    private TextField priceTF;
-
-    @FXML
-    private ComboBox<RoomCategory> categoryCB;
-
-    @FXML
-    private ComboBox<RoomType> typeCB;
-
-    @FXML
     private ListView<Room> roomListView;
+    @FXML
+    private TextField roomNumberField;
+    @FXML
+    private TextField dailyRateField;
+    @FXML
+    private ComboBox<RoomCategory> categoryComboBox;
+    @FXML
+    private ComboBox<RoomType> typeComboBox;
 
     @FXML
     public void initialize() {
-        loadRooms();
-        loadCategoriesAndTypes();
-    }
-
-    private void loadRooms() {
-        List<Room> rooms = roomRepository.findAll();
-        roomListView.setItems(FXCollections.observableArrayList(rooms));
-    }
-
-    private void loadCategoriesAndTypes() {
-        categoryCB.setItems(FXCollections.observableArrayList(roomCategoryRepository.findAll()));
-        typeCB.setItems(FXCollections.observableArrayList(roomTypeRepository.findAll()));
+        refreshRoomList();
+        categoryComboBox.getItems().addAll(roomCategoryRepository.findAll());
+        typeComboBox.getItems().addAll(roomTypeRepository.findAll());
     }
 
     @FXML
-    public void saveRoom() {
-        try {
-            Room room = new Room();
-            room.setRoomNumber(Integer.parseInt(roomNumberTF.getText()));
-            room.setPrice(new BigDecimal(priceTF.getText()));
-            room.setRoomCategory(categoryCB.getValue());
-            room.setRoomType(typeCB.getValue());
+    public void addRoom() {
+        Room room = new Room();
+        room.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
+        room.setDailyRate(new BigDecimal(dailyRateField.getText()));
+        room.setRoomCategory(categoryComboBox.getValue());
+        room.setRoomType(typeComboBox.getValue());
+        roomRepository.save(room);
+        refreshRoomList();
+        clearFields();
+    }
 
-            roomRepository.save(room);
-            loadRooms();
-        } catch (Exception e) {
-            showError("Fehler beim Speichern", "Bitte alle Felder korrekt ausfüllen.");
+    @FXML
+    public void editRoom() {
+        Room selectedRoom = roomListView.getSelectionModel().getSelectedItem();
+        if (selectedRoom != null) {
+            selectedRoom.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
+            selectedRoom.setDailyRate(new BigDecimal(dailyRateField.getText()));
+            selectedRoom.setRoomCategory(categoryComboBox.getValue());
+            selectedRoom.setRoomType(typeComboBox.getValue());
+            roomRepository.save(selectedRoom);
+            refreshRoomList();
+            clearFields();
         }
     }
 
@@ -79,17 +74,20 @@ public class RoomController {
         Room selectedRoom = roomListView.getSelectionModel().getSelectedItem();
         if (selectedRoom != null) {
             roomRepository.delete(selectedRoom);
-            loadRooms();
-        } else {
-            showError("Fehler", "Bitte ein Zimmer auswählen.");
+            refreshRoomList();
+            clearFields();
         }
     }
 
-    private void showError(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+    private void refreshRoomList() {
+        roomListView.getItems().clear();
+        roomListView.getItems().addAll(roomRepository.findAll());
+    }
+
+    private void clearFields() {
+        roomNumberField.clear();
+        dailyRateField.clear();
+        categoryComboBox.getSelectionModel().clearSelection();
+        typeComboBox.getSelectionModel().clearSelection();
     }
 }

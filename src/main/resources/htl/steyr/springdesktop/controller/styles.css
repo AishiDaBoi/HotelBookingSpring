@@ -1,0 +1,76 @@
+.root {
+    -fx-background-color: #282c34; /* Dunkelgrau */
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.title-label {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #61dafb; /* Helles Blau */
+}
+
+.section-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff; /* Weiß */
+}
+
+.sub-section-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ddd; /* Helleres Grau */
+}
+
+.menu-button,
+.action-button {
+    -fx-background-color: #61dafb; /* Helles Blau */
+    -fx-text-fill: #282c34; /* Dunkelgrau */
+    -fx-font-size: 18px; /* Größere Schrift */
+    -fx-padding: 10px 20px; /* Mehr Padding für größere Buttons */
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 1);
+    -fx-transition: -fx-background-color 0.3s;
+}
+
+.menu-button:hover,
+.action-button:hover {
+    -fx-background-color: #4ab4ef; /* Etwas dunkleres Blau */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.exit-button {
+    -fx-background-color: #ff5252; /* Helles Rot */
+    -fx-text-fill: #282c34; /* Dunkelgrau */
+    -fx-font-size: 16px; /* Größere Schrift */
+    -fx-padding: 8px 16px; /* Mehr Padding für größere Buttons */
+    -fx-background-radius: 5px;
+}
+
+.exit-button:hover {
+    -fx-background-color: #f44336; /* Dunkleres Rot */
+}
+
+.modern-input,
+.modern-combo-box,
+.modern-date-picker {
+    -fx-background-color: #3e4451; /* Dunkleres Grau */
+    -fx-text-fill: #fff; /* Weiß */
+    -fx-background-radius: 5px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-prompt-text-fill: #bbb; /* Hellgrauer Prompt-Text */
+}
+
+.modern-list-view {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 5px;
+}
+
+.modern-list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #fff; /* Weiß */
+}
+
+.modern-list-view .list-cell:filled:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
