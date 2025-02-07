@@ -1,14 +1,6 @@
 /* Grundlegende Einstellungen */
 .root {
-    -fx-background-color: #282c34;
-    -fx-font-family: 'Segoe UI', Arial, sans-serif;
-}
-
-/* Spezielle Root für Buchungsseiten mit einem sanften Farbverlauf */
-.booking-root {
-  /*
-    -fx-background-color: linear-gradient(to bottom, #282c34, #3a3f47);
-   */
+    -fx-background-color: #ecf0f1; /* Helles Grau für den Hintergrund */
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
 }
 
@@ -16,59 +8,59 @@
 .title-label {
     -fx-font-size: 36px;
     -fx-font-weight: bold;
-    -fx-text-fill: #61dafb;
+    -fx-text-fill: #3498db; /* Ein sattes Blau für Titel */
 }
 
 .header-label {
     -fx-font-size: 32px;
     -fx-font-weight: bold;
-    -fx-text-fill: #61dafb;
+    -fx-text-fill: #3498db;
     -fx-padding: 10px;
 }
 
 .section-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #2c3e50; /* Dunkelblau für Abschnittsüberschriften */
 }
 
 .sub-section-label {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #dddddd;
+    -fx-text-fill: #7f8c8d; /* Graublau für Unterabschnitte */
 }
 
-/* TitledPane – für klar abgegrenzte Bereiche wie Suchkriterien oder bestehende Buchungen */
+/* TitledPane – für klar abgegrenzte Bereiche */
 .titled-pane {
-    -fx-background-color: #3a3f47;
-    -fx-border-color: #61dafb;
+    -fx-background-color: #ffffff; /* Weißer Hintergrund für Pane */
+    -fx-border-color: #bdc3c7; /* Hellgraue Umrandung */
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 0.5em;
 }
 
-/* Der Titelbereich des TitledPane */
+/* Titelbereich des TitledPane */
 .titled-pane > .title {
-    -fx-background-color: #282c34;
-    -fx-text-fill: #61dafb;
+    -fx-background-color: #ffffff; /* Weißer Hintergrund für Titel */
+    -fx-text-fill: #3498db; /* Blau für Titeltext */
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-padding: 5px 10px;
 }
 
-/* Der Inhalt des TitledPane */
+/* Inhalt des TitledPane */
 .titled-pane > .content {
     -fx-padding: 10px;
-    -fx-background-color: #3a3f47;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #ffffff; /* Weißer Hintergrund für Inhalt */
+    -fx-text-fill: #2c3e50; /* Dunkelgrauer Text für Inhalt */
 }
 
-/* Button-Styling – sowohl für Menüs als auch für Aktionen */
+/* Button-Styling */
 .menu-button,
 .action-button {
-    -fx-background-color: #61dafb;
-    -fx-text-fill: #282c34;
+    -fx-background-color: #3498db; /* Blau für Buttons */
+    -fx-text-fill: #ffffff; /* Weißer Text */
     -fx-font-size: 18px;
     -fx-padding: 10px 20px;
     -fx-background-radius: 5;
@@ -79,15 +71,15 @@
 
 .menu-button:hover,
 .action-button:hover {
-    -fx-background-color: #4ab4ef;
+    -fx-background-color: #2980b9; /* Dunkleres Blau beim Hover */
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
 
-/* Exit-Button mit etwas kleinerer Schrift */
+/* Exit-Button */
 .exit-button {
-    -fx-background-color: #ff5252;
-    -fx-text-fill: #282c34;
+    -fx-background-color: #e74c3c; /* Rotes Design für Exit-Button */
+    -fx-text-fill: #ffffff;
     -fx-font-size: 16px;
     -fx-padding: 8px 16px;
     -fx-background-radius: 5;
@@ -95,39 +87,65 @@
 }
 
 .exit-button:hover {
-    -fx-background-color: #f44336;
+    -fx-background-color: #c0392b; /* Dunkleres Rot beim Hover */
 }
 
-/* Eingabefelder, ComboBox und DatePicker in einem modernen, dunklen Stil */
+/* Eingabefelder, ComboBox und DatePicker */
 .modern-input,
 .modern-combo-box,
 .modern-date-picker {
-    -fx-background-color: #3e4451;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #ffffff; /* Weißer Hintergrund */
+    -fx-text-fill: #2c3e50; /* Dunkelgrauer Text */
     -fx-background-radius: 5;
     -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
-    -fx-prompt-text-fill: #bbbbbb;
+    -fx-prompt-text-fill: #95a5a6; /* Hellgrauer Prompt-Text */
 }
 
-/* ListView – moderne Darstellung mit transparentem Hintergrund */
+/* ListView */
 .modern-list-view {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(0, 0, 0, 0.05); /* Sehr heller Grauton für ListView */
     -fx-background-radius: 5;
 }
 
 .modern-list-view .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #2c3e50; /* Dunkelgrauer Text */
     -fx-padding: 5px 10px;
 }
 
 .modern-list-view .list-cell:filled:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(52, 152, 219, 0.3); /* Leicht blau hinterlegt bei Auswahl */
 }
 
-/* Icon-Styling (z. B. für FontIcon in Buttons) */
+/* Icon-Styling */
 .button-icon {
     -fx-font-size: 20px;
-    -fx-fill: #282c34;
+    -fx-fill: #ffffff;
     -fx-padding: 0 5px 0 0;
+}
+
+/* TabPane */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #ffffff; /* Weißer Hintergrund für Tab-Header */
+}
+
+.tab-pane .tab {
+    -fx-text-fill: #2c3e50; /* Dunkelgrauer Text */
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ecf0f1; /* Heller Grauton für ausgewählten Tab */
+}
+
+.tab-pane .tab-header-area .control-buttons-tab {
+    -fx-padding: 0;
+}
+
+.tab-pane .tab-header-area {
+    -fx-pref-height: 40;
+}
+
+.exit-area {
+    -fx-padding: 20;
+    -fx-alignment: center;
 }

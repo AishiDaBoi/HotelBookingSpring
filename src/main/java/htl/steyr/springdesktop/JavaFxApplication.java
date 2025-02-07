@@ -32,6 +32,7 @@ public class JavaFxApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartController.class.getResource("start-view.fxml"));
 
+
         /*
          * Set spring as the factory (when controllers were generated).
          * So spring is able to do its magic.
@@ -49,6 +50,8 @@ public class JavaFxApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        primaryStage.setAlwaysOnTop(true);
+
         primaryStage.show();
     }
 
