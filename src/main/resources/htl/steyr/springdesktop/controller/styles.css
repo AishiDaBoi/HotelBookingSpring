@@ -1,76 +1,133 @@
+/* Grundlegende Einstellungen */
 .root {
-    -fx-background-color: #282c34; /* Dunkelgrau */
+    -fx-background-color: #282c34;
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
 }
 
+/* Spezielle Root für Buchungsseiten mit einem sanften Farbverlauf */
+.booking-root {
+  /*
+    -fx-background-color: linear-gradient(to bottom, #282c34, #3a3f47);
+   */
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Überschriften und Label */
 .title-label {
     -fx-font-size: 36px;
     -fx-font-weight: bold;
-    -fx-text-fill: #61dafb; /* Helles Blau */
+    -fx-text-fill: #61dafb;
+}
+
+.header-label {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #61dafb;
+    -fx-padding: 10px;
 }
 
 .section-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #fff; /* Weiß */
+    -fx-text-fill: #ffffff;
 }
 
 .sub-section-label {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #ddd; /* Helleres Grau */
+    -fx-text-fill: #dddddd;
 }
 
+/* TitledPane – für klar abgegrenzte Bereiche wie Suchkriterien oder bestehende Buchungen */
+.titled-pane {
+    -fx-background-color: #3a3f47;
+    -fx-border-color: #61dafb;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 0.5em;
+}
+
+/* Der Titelbereich des TitledPane */
+.titled-pane > .title {
+    -fx-background-color: #282c34;
+    -fx-text-fill: #61dafb;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+/* Der Inhalt des TitledPane */
+.titled-pane > .content {
+    -fx-padding: 10px;
+    -fx-background-color: #3a3f47;
+    -fx-text-fill: #ffffff;
+}
+
+/* Button-Styling – sowohl für Menüs als auch für Aktionen */
 .menu-button,
 .action-button {
-    -fx-background-color: #61dafb; /* Helles Blau */
-    -fx-text-fill: #282c34; /* Dunkelgrau */
-    -fx-font-size: 18px; /* Größere Schrift */
-    -fx-padding: 10px 20px; /* Mehr Padding für größere Buttons */
-    -fx-background-radius: 5px;
+    -fx-background-color: #61dafb;
+    -fx-text-fill: #282c34;
+    -fx-font-size: 18px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 1);
-    -fx-transition: -fx-background-color 0.3s;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s ease-in-out;
 }
 
 .menu-button:hover,
 .action-button:hover {
-    -fx-background-color: #4ab4ef; /* Etwas dunkleres Blau */
+    -fx-background-color: #4ab4ef;
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
 
+/* Exit-Button mit etwas kleinerer Schrift */
 .exit-button {
-    -fx-background-color: #ff5252; /* Helles Rot */
-    -fx-text-fill: #282c34; /* Dunkelgrau */
-    -fx-font-size: 16px; /* Größere Schrift */
-    -fx-padding: 8px 16px; /* Mehr Padding für größere Buttons */
-    -fx-background-radius: 5px;
+    -fx-background-color: #ff5252;
+    -fx-text-fill: #282c34;
+    -fx-font-size: 16px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
 
 .exit-button:hover {
-    -fx-background-color: #f44336; /* Dunkleres Rot */
+    -fx-background-color: #f44336;
 }
 
+/* Eingabefelder, ComboBox und DatePicker in einem modernen, dunklen Stil */
 .modern-input,
 .modern-combo-box,
 .modern-date-picker {
-    -fx-background-color: #3e4451; /* Dunkleres Grau */
-    -fx-text-fill: #fff; /* Weiß */
-    -fx-background-radius: 5px;
+    -fx-background-color: #3e4451;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5;
     -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
-    -fx-prompt-text-fill: #bbb; /* Hellgrauer Prompt-Text */
+    -fx-prompt-text-fill: #bbbbbb;
 }
 
+/* ListView – moderne Darstellung mit transparentem Hintergrund */
 .modern-list-view {
     -fx-background-color: rgba(255, 255, 255, 0.1);
-    -fx-background-radius: 5px;
+    -fx-background-radius: 5;
 }
 
 .modern-list-view .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #fff; /* Weiß */
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5px 10px;
 }
 
 .modern-list-view .list-cell:filled:selected {
     -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Icon-Styling (z. B. für FontIcon in Buttons) */
+.button-icon {
+    -fx-font-size: 20px;
+    -fx-fill: #282c34;
+    -fx-padding: 0 5px 0 0;
 }

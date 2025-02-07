@@ -1,24 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.animation.FadeTransition?>
+<?import javafx.animation.TranslateTransition?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox spacing="20" styleClass="root" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml" fx:controller="htl.steyr.springdesktop.controller.StartController">
+<?import javafx.scene.text.Font?>
+<BorderPane fx:id="rootPane"
+            styleClass="root"
+            stylesheets="@styles.css"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="htl.steyr.springdesktop.controller.StartController">
+   <!-- Globales Padding -->
    <padding>
       <Insets top="30" right="30" bottom="30" left="30"/>
    </padding>
 
-   <Label text="Hotel Booking System" styleClass="title-label"/>
+   <!-- Header mit Titel -->
+   <top>
+      <HBox alignment="CENTER">
+         <Label text="Hotel Booking System" styleClass="title-label">
+            <font>
+               <Font size="36.0"/>
+            </font>
+         </Label>
+      </HBox>
+   </top>
 
-   <GridPane hgap="20" vgap="20" alignment="CENTER">
-      <Button text="Customer Management" onAction="#openCustomerManagement" styleClass="menu-button" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-      <Button text="Room Management" onAction="#openRoomManagement" styleClass="menu-button" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-      <Button text="Room Category Management" onAction="#openRoomCategoryManagement" styleClass="menu-button" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-      <Button text="Room Type Management" onAction="#openRoomTypeManagement" styleClass="menu-button" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-      <Button text="Booking Management" onAction="#openBookingManagement" styleClass="menu-button" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2"/>
-   </GridPane>
+   <!-- Center: GridPane für das Hauptmenü -->
+   <center>
+      <GridPane hgap="20" vgap="20" alignment="CENTER">
+         <!-- Customer Management -->
+         <Button onAction="#openCustomerManagement"
+                 styleClass="menu-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown"
+                 GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <graphic>
+               <FontIcon iconLiteral="fas-user" styleClass="button-icon"/>
+            </graphic>
+            Customer Management
+         </Button>
 
-   <Button text="Exit" onAction="#exitApplication" styleClass="exit-button"/>
-</VBox>
+         <!-- Room Management -->
+         <Button onAction="#openRoomManagement"
+                 styleClass="menu-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown"
+                 GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <graphic>
+               <FontIcon iconLiteral="fas-bed" styleClass="button-icon"/>
+            </graphic>
+            Room Management
+         </Button>
+
+         <!-- Room Category Management -->
+         <Button onAction="#openRoomCategoryManagement"
+                 styleClass="menu-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown"
+                 GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <graphic>
+               <FontIcon iconLiteral="fas-list" styleClass="button-icon"/>
+            </graphic>
+            Room Category Management
+         </Button>
+
+         <!-- Room Type Management -->
+         <Button onAction="#openRoomTypeManagement"
+                 styleClass="menu-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown"
+                 GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <graphic>
+               <FontIcon iconLiteral="fas-th" styleClass="button-icon"/>
+            </graphic>
+            Room Type Management
+         </Button>
+
+         <!-- Booking Management (über beide Spalten) -->
+         <Button onAction="#openBookingManagement"
+                 styleClass="menu-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown"
+                 GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
+            <graphic>
+               <FontIcon iconLiteral="fas-calendar-alt" styleClass="button-icon"/>
+            </graphic>
+            Booking Management
+         </Button>
+      </GridPane>
+   </center>
+
+   <!-- Footer: Exit-Button -->
+   <bottom>
+      <HBox alignment="CENTER" spacing="20">
+         <Button text="Exit"
+                 onAction="#exitApplication"
+                 styleClass="exit-button"
+                 onMouseEntered="#scaleUp" onMouseExited="#scaleDown">
+            <graphic>
+               <FontIcon iconLiteral="fas-sign-out-alt" styleClass="button-icon"/>
+            </graphic>
+         </Button>
+      </HBox>
+   </bottom>
+
+   <!-- Definition von Animationen (können im Controller gestartet werden) -->
+   <fx:define>
+      <FadeTransition fx:id="fadeInTransition" duration="1s" fromValue="0.0" toValue="1.0" node="$rootPane"/>
+      <TranslateTransition fx:id="slideDownTransition" duration="1s" fromY="-20" toY="0" node="$rootPane"/>
+   </fx:define>
+
+
+
+</BorderPane>

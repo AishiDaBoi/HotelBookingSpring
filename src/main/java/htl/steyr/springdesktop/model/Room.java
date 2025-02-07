@@ -60,4 +60,17 @@ public class Room {
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
     }
+
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                ", roomNumber=" + roomNumber +
+                ", roomType=" + roomType +
+                ", roomCategory=" + roomCategory +
+                ", dailyRate=" + dailyRate +
+                '}';
+    }
+
+
 }
