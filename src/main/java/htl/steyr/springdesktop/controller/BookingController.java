@@ -38,6 +38,8 @@ public class BookingController {
     @FXML
     private ListView<Booking> bookingsListView;
 
+    Notification notification = new Notification();
+
     @FXML
     public void initialize() {
         customerComboBox.getItems().addAll(customerRepository.findAll());
@@ -46,6 +48,9 @@ public class BookingController {
 
     @FXML
     public void searchAvailableRooms() {
+
+        try{
+
         LocalDate arrival = arrivalDatePicker.getValue();
         LocalDate departure = departureDatePicker.getValue();
         List<Room> availableRooms = roomRepository.findAll().stream()
@@ -53,6 +58,9 @@ public class BookingController {
                 .collect(Collectors.toList());
         availableRoomsListView.getItems().clear();
         availableRoomsListView.getItems().addAll(availableRooms);
+        }catch (Exception e){
+            notification.showError("Error", "Could not search available rooms!", "You need to select a Start Date and an End Date to proceed!");
+        }
     }
 
     @FXML
@@ -117,6 +125,7 @@ public class BookingController {
                         (departure.isAfter(booking.getBooking().getDateOfArrival()) || departure.isEqual(booking.getBooking().getDateOfArrival()))
         );
     }
+
 
     private void updateTotalPrice() {
         double totalPrice = selectedRoomsListView.getItems().stream()

@@ -10,7 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class JavaFxApplication extends Application {
-    private static final String APPLICATION_TITLE = "Hotel-Buchungssoftware";
+    private static final String APPLICATION_TITLE = "Hotel-Booking-Software";
 
     public static ConfigurableApplicationContext springContext;
 
@@ -50,7 +50,7 @@ public class JavaFxApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setAlwaysOnTop(false);
 
         primaryStage.show();
     }

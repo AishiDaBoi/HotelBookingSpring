@@ -1,5 +1,6 @@
 package htl.steyr.springdesktop.controller;
 
+import htl.steyr.springdesktop.model.Notification;
 import htl.steyr.springdesktop.model.Room;
 import htl.steyr.springdesktop.model.RoomCategory;
 import htl.steyr.springdesktop.model.RoomType;
@@ -36,6 +37,8 @@ public class RoomController {
     @FXML
     private ComboBox<RoomType> typeComboBox;
 
+    Notification notification = new Notification();
+
     @FXML
     public void initialize() {
         refreshRoomList();
@@ -59,13 +62,14 @@ public class RoomController {
     public void editRoom() {
         Room selectedRoom = roomListView.getSelectionModel().getSelectedItem();
         if (selectedRoom != null) {
-            selectedRoom.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
-            selectedRoom.setDailyRate(new BigDecimal(dailyRateField.getText()));
-            selectedRoom.setRoomCategory(categoryComboBox.getValue());
-            selectedRoom.setRoomType(typeComboBox.getValue());
-            roomRepository.save(selectedRoom);
+            roomNumberField.setText(String.valueOf(selectedRoom.getRoomNumber()));
+            dailyRateField.setText(String.valueOf(selectedRoom.getDailyRate()));
+            categoryComboBox.setValue(selectedRoom.getRoomCategory());
+            typeComboBox.setValue(selectedRoom.getRoomType());
             refreshRoomList();
             clearFields();
+        } else {
+            notification.showError("Error", "Error", "No room selected!");
         }
     }
 

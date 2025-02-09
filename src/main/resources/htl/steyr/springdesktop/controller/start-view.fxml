@@ -15,29 +15,19 @@
    <center>
       <TabPane tabClosingPolicy="UNAVAILABLE">
          <Tab text="Customer Management">
-            <content>
-               <fx:include source="customer-view.fxml"/>
-            </content>
+            <fx:include source="customer-view.fxml"/>
          </Tab>
          <Tab text="Room Management">
-            <content>
-               <fx:include source="room-view.fxml"/>
-            </content>
+            <fx:include source="room-view.fxml"/>
          </Tab>
          <Tab text="Room Category Management">
-            <content>
-               <fx:include source="room-category-view.fxml"/>
-            </content>
+            <fx:include source="room-category-view.fxml"/>
          </Tab>
          <Tab text="Room Type Management">
-            <content>
-               <fx:include source="room-type-view.fxml"/>
-            </content>
+            <fx:include source="room-type-view.fxml"/>
          </Tab>
          <Tab text="Booking Management">
-            <content>
-               <fx:include source="booking-view.fxml"/>
-            </content>
+            <fx:include source="booking-view.fxml"/>
          </Tab>
       </TabPane>
    </center>
