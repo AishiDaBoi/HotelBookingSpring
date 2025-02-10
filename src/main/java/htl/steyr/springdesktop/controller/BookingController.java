@@ -90,6 +90,9 @@ public class BookingController {
         updateTotalPrice();
     }
 
+
+
+
     /**
      * Removes a selected room from the booking.
      * Displays an error if no room is selected.
@@ -179,6 +182,16 @@ public class BookingController {
         double totalPrice = selectedRoomsListView.getItems().stream()
                 .mapToDouble(room -> room.getDailyRate().doubleValue())
                 .sum();
+
+
+        if (selectedRoomsListView.getItems().size() >= 5){
+            totalPrice *= 0.9;
+        }
+
+
+
+
+
         totalPriceField.setText(String.format("%.2f", totalPrice));
     }
 
