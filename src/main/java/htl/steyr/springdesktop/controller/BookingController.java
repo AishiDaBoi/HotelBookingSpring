@@ -66,9 +66,7 @@ public class BookingController {
 
         LocalDate arrival = arrivalDatePicker.getValue();
         LocalDate departure = departureDatePicker.getValue();
-        List<Room> availableRooms = roomRepository.findAll().stream()
-                .filter(room -> isRoomAvailable(room, arrival, departure))
-                .collect(Collectors.toList());
+        List<Room> availableRooms = roomRepository.findAll().stream().filter(room -> isRoomAvailable(room, arrival, departure)).collect(Collectors.toList());
         availableRoomsListView.getItems().clear();
         availableRoomsListView.getItems().addAll(availableRooms);
     }
@@ -89,8 +87,6 @@ public class BookingController {
         availableRoomsListView.getItems().remove(selectedRoom);
         updateTotalPrice();
     }
-
-
 
 
     /**
@@ -162,34 +158,26 @@ public class BookingController {
     /**
      * Checks if a room is available for the given date range.
      *
-     * @param room     The room to check.
-     * @param arrival  The arrival date.
+     * @param room      The room to check.
+     * @param arrival   The arrival date.
      * @param departure The departure date.
      * @return true if the room is available, false otherwise.
      */
     private boolean isRoomAvailable(Room room, LocalDate arrival, LocalDate departure) {
         List<RoomBooking> bookings = roomBookingRepository.findByRoom(room);
-        return bookings.stream().noneMatch(booking ->
-                (arrival.isBefore(booking.getBooking().getDateOfDeparture()) || arrival.isEqual(booking.getBooking().getDateOfDeparture())) &&
-                        (departure.isAfter(booking.getBooking().getDateOfArrival()) || departure.isEqual(booking.getBooking().getDateOfArrival()))
-        );
+        return bookings.stream().noneMatch(booking -> (arrival.isBefore(booking.getBooking().getDateOfDeparture()) || arrival.isEqual(booking.getBooking().getDateOfDeparture())) && (departure.isAfter(booking.getBooking().getDateOfArrival()) || departure.isEqual(booking.getBooking().getDateOfArrival())));
     }
 
     /**
      * Updates the total price based on selected rooms.
      */
     private void updateTotalPrice() {
-        double totalPrice = selectedRoomsListView.getItems().stream()
-                .mapToDouble(room -> room.getDailyRate().doubleValue())
-                .sum();
+        double totalPrice = selectedRoomsListView.getItems().stream().mapToDouble(room -> room.getDailyRate().doubleValue()).sum();
 
 
-        if (selectedRoomsListView.getItems().size() >= 5){
+        if (selectedRoomsListView.getItems().size() >= 5) {
             totalPrice *= 0.9;
         }
-
-
-
 
 
         totalPriceField.setText(String.format("%.2f", totalPrice));
