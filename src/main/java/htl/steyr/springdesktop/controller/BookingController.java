@@ -11,6 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for handling room bookings.
+ * Allows users to search available rooms, add rooms to a booking, and manage bookings.
+ */
 @Component
 public class BookingController {
 
@@ -38,18 +42,27 @@ public class BookingController {
     @FXML
     private ListView<Booking> bookingsListView;
 
-    Notification notification = new Notification();
+    private final Notification notification = new Notification();
 
+    /**
+     * Initializes the controller by populating the customer list and refreshing the bookings list.
+     */
     @FXML
     public void initialize() {
         customerComboBox.getItems().addAll(customerRepository.findAll());
         refreshBookingsList();
     }
 
+    /**
+     * Searches for available rooms based on selected dates.
+     * Displays an error message if no dates are selected.
+     */
     @FXML
     public void searchAvailableRooms() {
-
-        try{
+        if (arrivalDatePicker.getValue() == null || departureDatePicker.getValue() == null) {
+            notification.showError("Error", "Date Selection Required", "You must select an arrival and departure date.");
+            return;
+        }
 
         LocalDate arrival = arrivalDatePicker.getValue();
         LocalDate departure = departureDatePicker.getValue();
@@ -58,31 +71,46 @@ public class BookingController {
                 .collect(Collectors.toList());
         availableRoomsListView.getItems().clear();
         availableRoomsListView.getItems().addAll(availableRooms);
-        }catch (Exception e){
-            notification.showError("Error", "Could not search available rooms!", "You need to select a Start Date and an End Date to proceed!");
-        }
     }
 
+    /**
+     * Adds a selected room to the booking.
+     * Displays an error if no room is selected.
+     */
     @FXML
     public void addRoomToBooking() {
         Room selectedRoom = availableRoomsListView.getSelectionModel().getSelectedItem();
-        if (selectedRoom != null) {
-            selectedRoomsListView.getItems().add(selectedRoom);
-            availableRoomsListView.getItems().remove(selectedRoom);
-            updateTotalPrice();
+        if (selectedRoom == null) {
+            notification.showError("Error", "No Room Selected", "Please select a room to add.");
+            return;
         }
+
+        selectedRoomsListView.getItems().add(selectedRoom);
+        availableRoomsListView.getItems().remove(selectedRoom);
+        updateTotalPrice();
     }
 
+    /**
+     * Removes a selected room from the booking.
+     * Displays an error if no room is selected.
+     */
     @FXML
     public void removeRoomFromBooking() {
         Room selectedRoom = selectedRoomsListView.getSelectionModel().getSelectedItem();
-        if (selectedRoom != null) {
-            availableRoomsListView.getItems().add(selectedRoom);
-            selectedRoomsListView.getItems().remove(selectedRoom);
-            updateTotalPrice();
+        if (selectedRoom == null) {
+            notification.showError("Error", "No Room Selected", "Please select a room to remove.");
+            return;
         }
+
+        availableRoomsListView.getItems().add(selectedRoom);
+        selectedRoomsListView.getItems().remove(selectedRoom);
+        updateTotalPrice();
     }
 
+    /**
+     * Creates a new booking.
+     * Displays an error if fields are missing.
+     */
     @FXML
     public void createBooking() {
         Customer customer = customerComboBox.getValue();
@@ -90,34 +118,52 @@ public class BookingController {
         LocalDate departure = departureDatePicker.getValue();
         List<Room> selectedRooms = selectedRoomsListView.getItems();
 
-        if (customer != null && arrival != null && departure != null && !selectedRooms.isEmpty()) {
-            Booking booking = new Booking();
-            booking.setCustomer(customer);
-            booking.setDateOfArrival(arrival);
-            booking.setDateOfDeparture(departure);
-            bookingRepository.save(booking);
-
-            for (Room room : selectedRooms) {
-                RoomBooking roomBooking = new RoomBooking();
-                roomBooking.setRoom(room);
-                roomBooking.setBooking(booking);
-                roomBookingRepository.save(roomBooking);
-            }
-
-            refreshBookingsList();
-            clearFields();
+        if (customer == null || arrival == null || departure == null || selectedRooms.isEmpty()) {
+            notification.showError("Error", "Incomplete Booking", "Please fill all fields and select at least one room.");
+            return;
         }
+
+        Booking booking = new Booking();
+        booking.setCustomer(customer);
+        booking.setDateOfArrival(arrival);
+        booking.setDateOfDeparture(departure);
+        bookingRepository.save(booking);
+
+        for (Room room : selectedRooms) {
+            RoomBooking roomBooking = new RoomBooking();
+            roomBooking.setRoom(room);
+            roomBooking.setBooking(booking);
+            roomBookingRepository.save(roomBooking);
+        }
+
+        refreshBookingsList();
+        clearFields();
     }
 
+    /**
+     * Cancels the selected booking.
+     * Displays an error if no booking is selected.
+     */
     @FXML
     public void cancelBooking() {
         Booking selectedBooking = bookingsListView.getSelectionModel().getSelectedItem();
-        if (selectedBooking != null) {
-            bookingRepository.delete(selectedBooking);
-            refreshBookingsList();
+        if (selectedBooking == null) {
+            notification.showError("Error", "No Booking Selected", "Please select a booking to cancel.");
+            return;
         }
+
+        bookingRepository.delete(selectedBooking);
+        refreshBookingsList();
     }
 
+    /**
+     * Checks if a room is available for the given date range.
+     *
+     * @param room     The room to check.
+     * @param arrival  The arrival date.
+     * @param departure The departure date.
+     * @return true if the room is available, false otherwise.
+     */
     private boolean isRoomAvailable(Room room, LocalDate arrival, LocalDate departure) {
         List<RoomBooking> bookings = roomBookingRepository.findByRoom(room);
         return bookings.stream().noneMatch(booking ->
@@ -126,7 +172,9 @@ public class BookingController {
         );
     }
 
-
+    /**
+     * Updates the total price based on selected rooms.
+     */
     private void updateTotalPrice() {
         double totalPrice = selectedRoomsListView.getItems().stream()
                 .mapToDouble(room -> room.getDailyRate().doubleValue())
@@ -134,11 +182,17 @@ public class BookingController {
         totalPriceField.setText(String.format("%.2f", totalPrice));
     }
 
+    /**
+     * Refreshes the bookings list.
+     */
     private void refreshBookingsList() {
         bookingsListView.getItems().clear();
         bookingsListView.getItems().addAll(bookingRepository.findAll());
     }
 
+    /**
+     * Clears all input fields.
+     */
     private void clearFields() {
         arrivalDatePicker.setValue(null);
         departureDatePicker.setValue(null);

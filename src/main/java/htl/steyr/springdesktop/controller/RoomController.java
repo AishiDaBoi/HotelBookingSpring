@@ -16,6 +16,10 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+/**
+ * Controller for managing rooms.
+ * Provides functionality to add, edit, delete, and display rooms.
+ */
 @Component
 public class RoomController {
 
@@ -37,8 +41,11 @@ public class RoomController {
     @FXML
     private ComboBox<RoomType> typeComboBox;
 
-    Notification notification = new Notification();
+    private Notification notification = new Notification();
 
+    /**
+     * Initializes the controller by populating the room list and dropdown menus.
+     */
     @FXML
     public void initialize() {
         refreshRoomList();
@@ -46,18 +53,38 @@ public class RoomController {
         typeComboBox.getItems().addAll(roomTypeRepository.findAll());
     }
 
+    /**
+     * Adds a new room to the database.
+     * Retrieves input values, creates a new Room object, and saves it.
+     * Ensures all fields are filled and valid before saving.
+     */
     @FXML
     public void addRoom() {
-        Room room = new Room();
-        room.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
-        room.setDailyRate(new BigDecimal(dailyRateField.getText()));
-        room.setRoomCategory(categoryComboBox.getValue());
-        room.setRoomType(typeComboBox.getValue());
-        roomRepository.save(room);
-        refreshRoomList();
-        clearFields();
+        try {
+            if (roomNumberField.getText().isEmpty() || dailyRateField.getText().isEmpty() ||
+                    categoryComboBox.getValue() == null || typeComboBox.getValue() == null) {
+                notification.showError("Error", "Missing Fields", "All fields must be filled!");
+                return;
+            }
+
+            Room room = new Room();
+            room.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
+            room.setDailyRate(new BigDecimal(dailyRateField.getText()));
+            room.setRoomCategory(categoryComboBox.getValue());
+            room.setRoomType(typeComboBox.getValue());
+
+            roomRepository.save(room);
+            refreshRoomList();
+            clearFields();
+        } catch (NumberFormatException e) {
+            notification.showError("Error", "Invalid Input", "Room number and daily rate must be valid numbers!");
+        }
     }
 
+    /**
+     * Edits the selected room.
+     * Loads the selected room's data into the input fields for modification.
+     */
     @FXML
     public void editRoom() {
         Room selectedRoom = roomListView.getSelectionModel().getSelectedItem();
@@ -66,13 +93,15 @@ public class RoomController {
             dailyRateField.setText(String.valueOf(selectedRoom.getDailyRate()));
             categoryComboBox.setValue(selectedRoom.getRoomCategory());
             typeComboBox.setValue(selectedRoom.getRoomType());
-            refreshRoomList();
-            clearFields();
         } else {
-            notification.showError("Error", "Error", "No room selected!");
+            notification.showError("Error", "No Room Selected", "Please select a room to edit!");
         }
     }
 
+    /**
+     * Deletes the selected room from the database.
+     * If a room is selected, it removes it and updates the UI.
+     */
     @FXML
     public void deleteRoom() {
         Room selectedRoom = roomListView.getSelectionModel().getSelectedItem();
@@ -80,14 +109,23 @@ public class RoomController {
             roomRepository.delete(selectedRoom);
             refreshRoomList();
             clearFields();
+        } else {
+            notification.showError("Error", "No Room Selected", "Please select a room to delete!");
         }
     }
 
+    /**
+     * Refreshes the room list displayed in the UI.
+     * Fetches all rooms from the database and updates the ListView.
+     */
     private void refreshRoomList() {
         roomListView.getItems().clear();
         roomListView.getItems().addAll(roomRepository.findAll());
     }
 
+    /**
+     * Clears all input fields.
+     */
     private void clearFields() {
         roomNumberField.clear();
         dailyRateField.clear();
